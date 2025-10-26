@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Kết quả chuyển đổi</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    .container { background: #fff; border: 1px solid #ccc; padding: 25px; border-radius: 8px; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    h1 { color: #007bff; }
+    p { font-size: 1.2em; }
+    span { font-weight: bold; color: #d9534f; }
+    a { display: inline-block; margin-top: 20px; text-decoration: none; background-color: #5cb85c; color: white; padding: 10px 15px; border-radius: 4px; }
+    a:hover { background-color: #4cae4c; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Kết quả chuyển đổi</h1>
+
+  <p>
+    <span th:text="${#numbers.formatDecimal(usdAmount, 1, 'COMMA', 2, 'POINT')}"></span> USD
+  </p>
+  <p>
+    với tỉ giá <span th:text="${#numbers.formatDecimal(rateAmount, 1, 'COMMA', 0, 'POINT')}"></span> VND/USD
+  </p>
+  <p>
+    bằng:
+  </p>
+  <h2 style="color: green;">
+    <span th:text="${#numbers.formatDecimal(vndResult, 1, 'COMMA', 2, 'POINT')}"></span> VNĐ
+  </h2>
+
+  <a th:href="@{/}">Thực hiện chuyển đổi khác</a>
+</div>
+
+</body>
+</html>
