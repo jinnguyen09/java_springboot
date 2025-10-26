@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Kết quả tra cứu</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    .container { background: #fff; border: 1px solid #ccc; padding: 25px; border-radius: 8px; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    h1 { color: #007bff; }
+    .result { font-size: 1.2em; }
+    .word { font-weight: bold; color: #333; }
+    .meaning { font-weight: bold; color: #28a745; }
+    .error { font-weight: bold; color: #dc3545; }
+    a { display: inline-block; margin-top: 20px; text-decoration: none; background-color: #6c757d; color: white; padding: 10px 15px; border-radius: 4px; }
+    a:hover { background-color: #5a6268; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Kết quả tra cứu</h1>
+
+  <p class="result">
+    Từ tra cứu: <span class="word" th:text="${word}"></span>
+  </p>
+
+  <div th:if="${meaning != null}">
+    <p class="result">
+      Nghĩa tiếng Việt: <span class="meaning" th:text="${meaning}"></span>
+    </p>
+  </div>
+
+  <div th:if="${error != null}">
+    <p class="error" th:text="${error}"></p>
+  </div>
+
+  <a th:href="@{/}">Tra từ khác</a>
+</div>
+
+</body>
+</html>

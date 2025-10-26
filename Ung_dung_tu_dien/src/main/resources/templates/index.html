@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Từ điển Anh-Việt</title>
+    <style>
+        body { font-family: sans-serif; display: grid; place-items: center; min-height: 80vh; background-color: #f4f4f4; }
+        form { background: #fff; border: 1px solid #ccc; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { text-align: center; }
+        div { margin-bottom: 15px; }
+        label { font-weight: bold; margin-right: 10px; }
+        input { padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 250px; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<form th:action="@{/search}" method="post">
+    <h1>Từ điển Anh - Việt</h1>
+    <div>
+        <label for="word">Nhập từ tiếng Anh:</label>
+    </div>
+    <div>
+        <input type="text" id="word" name="englishWord" required>
+    </div>
+    <div>
+        <button typeT="submit">Tra cứu</button>
+    </div>
+</form>
+
+</body>
+</html>
