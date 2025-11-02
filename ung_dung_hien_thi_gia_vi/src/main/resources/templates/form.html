@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sandwich Condiments Selection</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .condiment-list label { margin-right: 15px; font-weight: bold; }
+        h2 { border-bottom: 2px solid #ccc; padding-bottom: 10px; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<h2>🥪 Sandwich Condiments</h2>
+
+<form th:action="@{/save}" th:object="${condiment}" method="post">
+
+    <div class="condiment-list">
+        <div th:each="item : ${allCondiments}">
+            <label>
+                <input type="checkbox"
+                       th:field="*{selectedCondiments}"
+                       th:value="${item}" />
+            </label>
+            <label th:for="${#ids.prev('selectedCondiments')}" th:text="${item}"></label>
+        </div>
+    </div>
+
+    <hr/>
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

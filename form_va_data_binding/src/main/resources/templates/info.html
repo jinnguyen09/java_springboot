@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Information</title>
+</head>
+<body>
+<h2>Submitted Employee Information</h2>
+<table>
+    <tr>
+        <td>Name:</td>
+        <td><p th:text="${name}">name</p></td>
+    </tr>
+    <tr>
+        <td>ID:</td>
+        <td><p th:text="${id}">id</p></td>
+    </tr>
+    <tr>
+        <td>Contact Number:</td>
+        <td><p th:text="${contactNumber}">contactNumber</p></td>
+    </tr>
+</table>
+</body>
+</html>

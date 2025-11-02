@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Selected Condiments</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #28a745; }
+        ul { list-style-type: disc; padding-left: 20px; }
+        li { margin-bottom: 5px; font-size: 1.1em; }
+        p { font-style: italic; color: #6c757d; }
+    </style>
+</head>
+<body>
+
+<h2>✅ Gia vị đã lựa chọn thành công!</h2>
+
+<div th:if="${condiment.selectedCondiments != null and not #lists.isEmpty(condiment.selectedCondiments)}">
+    <h3>Các gia vị bạn đã chọn:</h3>
+    <ul>
+        <li th:each="c : ${condiment.selectedCondiments}" th:text="${c}"></li>
+    </ul>
+</div>
+
+<div th:if="${condiment.selectedCondiments == null or #lists.isEmpty(condiment.selectedCondiments)}">
+    <p>Bạn không chọn bất kỳ gia vị nào cho món Sandwich.</p>
+</div>
+
+<hr/>
+<a href="/select">Chọn lại</a>
+
+</body>
+</html>
