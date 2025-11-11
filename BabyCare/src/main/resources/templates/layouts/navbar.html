@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <body>
+
+<!-- Spinner Start -->
+<div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<!-- Spinner End -->
+
 <!-- Navbar start -->
 <div th:fragment="navbar" class="container-fluid border-bottom bg-light wow fadeIn" data-wow-delay="0.1s">
     <div class="container topbar bg-primary d-none d-lg-block py-2" style="border-radius: 0 40px">
@@ -25,7 +32,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a th:href="@{/}" class="nav-item nav-link active">Home</a>
+                    <a th:href="@{/home}" class="nav-item nav-link active">Home</a>
                     <a th:href="@{/about}" class="nav-item nav-link">About</a>
                     <a th:href="@{/service}" class="nav-item nav-link">Services</a>
                     <a th:href="@{/program}" class="nav-item nav-link">Programs</a>
