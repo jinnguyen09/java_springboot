@@ -1,51 +1,46 @@
 package webapp.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@Entity
+@Table(name = "users")
 public class User {
 
     // Setter va Getter
-    @Getter
-    @Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String username;
-    @Getter
-    @Setter
+
     private String password;
-    @Getter
-    @Setter
+
     private String email;
-    @Getter
-    @Setter
+
     private String role;
-    @Setter
-    @Getter
+
     private String fullname;
-    @Setter
-    @Getter
+
     private int age;
-    @Setter
-    @Getter
+
     private String gender;
-    @Setter
-    @Getter
+
     private Number phone;
-    @Setter
-    @Getter
+
     private String address;
-    @Setter
-    @Getter
+
     private String avatar;
-    @Setter
-    @Getter
+
     private String status;
-    @Setter
-    @Getter
+
     private LocalDateTime created_at;
-    @Setter
-    @Getter
+
     private LocalDateTime updated_at;
 
     // Constructor
@@ -72,3 +67,4 @@ public class User {
         return "";
     }
 }
+
