@@ -1,4 +1,4 @@
-package webapp.model;
+package webapp.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class User {
 
     private String gender;
 
-    private Number phone;
+    private String phone;
 
     private String address;
 
