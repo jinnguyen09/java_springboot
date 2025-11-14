@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+
+<body>
+
+<!-- Navbar start -->
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+<!-- Navbar End -->
+
+<!-- Modal Edit Profile Start -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileLabel">Chỉnh sửa hồ sơ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+
+            <!-- form bind to user -->
+            <form th:object="${user}" th:action="@{/profile/update}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3 text-center">
+                        <!-- use ${user.avatar} inside URL parameters (not *{...}) -->
+                        <img th:if="${user != null and user.avatar != null}" th:src="@{/uploads/{f}(f=${user.avatar})}" class="rounded-circle" alt="avatar" width="100" height="100">
+                        <img th:unless="${user != null and user.avatar != null}" th:src="@{/static/img/default-avatar.png}" class="rounded-circle" alt="avatar" width="100" height="100">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control" id="fullname" th:field="*{fullname}" required>
+                        <div class="invalid-feedback">Vui lòng nhập họ và tên.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                        <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone" th:field="*{phone}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <textarea class="form-control" id="address" th:field="*{address}" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="avatarFile" class="form-label">Ảnh đại diện (tùy chọn)</label>
+                        <input class="form-control" type="file" id="avatarFile" name="avatarFile" accept="image/*">
+                        <!-- file upload: controller nhận @RequestParam("avatarFile") MultipartFile -->
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary rounded-pill">Lưu thay đổi</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Profile End -->
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s" style="background: linear-gradient(90deg,#0d6efd33,#6f42c133);">
+    <div class="container text-center py-5">
+        <h1 class="display-4 text-dark mb-2">Hồ sơ cá nhân</h1>
+        <p class="mb-0">Xem và chỉnh sửa thông tin cá nhân của bạn</p>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Profile Content Start -->
+<div class="container-fluid py-5">
+
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+        <!-- Success message -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Error message -->
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            <!-- Left column: profile card -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <img th:if="${user != null and user.avatar != null}" th:src="@{/uploads/{f}(f=${user.avatar})}" class="rounded-circle mb-3" alt="Avatar" width="140" height="140">
+                        <img th:unless="${user != null and user.avatar != null}" th:src="@{/static/img/default-avatar.png}" class="rounded-circle mb-3" alt="Avatar" width="140" height="140">
+
+                        <h3 class="card-title mb-1" th:text="${user != null ? user.fullname : 'Người dùng'}">Người dùng</h3>
+                        <p class="text-muted mb-2" th:text="${user != null && user.role != null ? user.role : 'Người dùng'}">Người dùng</p>
+                        <p class="mb-3" th:text="${user != null && user.address != null ? user.address : 'Chưa có thông tin.'}">Chưa có thông tin.</p>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="fa fa-pen me-2"></i>Chỉnh sửa hồ sơ
+                            </button>
+                            <a th:href="@{/logout}" class="btn btn-danger rounded-pill"><i class="fa fa-sign-out-alt me-2"></i>Đăng xuất</a>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <ul class="list-unstyled text-start">
+                            <li class="mb-2"><strong>Email:</strong> <span class="text-muted" th:text="${user != null && user.email != null ? user.email : 'user@example.com'}">user@example.com</span></li>
+                            <li class="mb-2"><strong>Số điện thoại:</strong> <span class="text-muted" th:text="${user != null && user.phone != null ? user.phone : 'Chưa cập nhật'}">Chưa cập nhật</span></li>
+                            <li class="mb-2"><strong>Địa chỉ:</strong> <span class="text-muted" th:text="${user != null && user.address != null ? user.address : 'Chưa cập nhật'}">Chưa cập nhật</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right column: tabs -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs mb-3" id="profileTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true">Giới thiệu</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity" type="button" role="tab" aria-controls="activity" aria-selected="false">Hoạt động</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Cài đặt</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="profileTabContent">
+                            <!-- About -->
+                            <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                <h5>Thông tin chi tiết</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <p class="mb-1"><strong>Họ và tên</strong></p>
+                                        <p class="text-muted" th:text="${user != null ? user.fullname : 'Người dùng'}">Người dùng</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <p class="mb-1"><strong>Email</strong></p>
+                                        <p class="text-muted" th:text="${user != null && user.email != null ? user.email : 'user@example.com'}">user@example.com</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <p class="mb-1"><strong>Số điện thoại</strong></p>
+                                        <p class="text-muted" th:text="${user != null && user.phone != null ? user.phone : 'Chưa cập nhật'}">Chưa cập nhật</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="mb-1"><strong>Địa chỉ</strong></p>
+                                        <p class="text-muted" th:text="${user != null && user.address != null ? user.address : 'Chưa có thông tin.'}">Chưa có thông tin.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Activity -->
+                            <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+                                <h5>Hoạt động gần đây</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" th:each="act : ${recentActivities}">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong th:text="${act.title}">Đăng nhập</strong>
+                                                <div class="small text-muted" th:text="${act.detail}">Đã cập nhật thông tin</div>
+                                            </div>
+                                            <div class="small text-muted" th:text="${#dates.format(act.time, 'dd/MM/yyyy HH:mm')}">13/11/2025 20:29</div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item" th:if="${#lists.isEmpty(recentActivities)}">Không có hoạt động nào gần đây.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Settings -->
+                            <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                                <h5>Cài đặt tài khoản</h5>
+                                <form th:action="@{/profile/settings}" method="post" class="mt-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Đổi mật khẩu</label>
+                                        <input type="password" class="form-control mb-2" id="currentPassword" name="currentPassword" placeholder="Mật khẩu hiện tại">
+                                        <input type="password" class="form-control mb-2" id="newPassword" name="newPassword" placeholder="Mật khẩu mới">
+                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu mới">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary rounded-pill">Lưu cài đặt</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Small cards below -->
+                <div class="row mt-4 g-3">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="mb-2">Số đơn hàng</h6>
+                                <h3 th:text="${stats != null ? stats.ordersCount : 0}">0</h3>
+                                <p class="mb-0 text-muted">Đơn hàng đã đặt</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="mb-2">Điểm tích lũy</h6>
+                                <h3 th:text="${stats != null ? stats.points : 0}">0</h3>
+                                <p class="mb-0 text-muted">Điểm thưởng hiện có</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- end right column -->
+        </div> <!-- end row -->
+    </div> <!-- end container -->
+</div>
+<!-- Profile Content End -->
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+<!-- Footer -->
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<!-- JavaScript Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/lib/wow/wow.min.js}"></script>
+<script th:src="@{/static/lib/waypoints/waypoints.min.js}"></script>
+<script th:src="@{/static/lib/lightbox/js/lightbox.min.js}"></script>
+<script th:src="@{/static/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/static/js/main.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Optional: client-side validation for modal form -->
+<script>
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
+</body>
+</html>

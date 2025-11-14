@@ -1,4 +1,4 @@
-package webapp.entity;
+package webapp.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -49,7 +49,7 @@ public class User {
     }
 
     public String user(String username, String password, String role, String fullname, int age,
-                       String gender, String email, Number phone, String address,
+                       String gender, String email, String phone, String address,
                        String avatar, String status, String created_at, String updated_at) {
         this.username = username;
         this.password = password;

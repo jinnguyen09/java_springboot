@@ -1,13 +1,21 @@
-<div th:fragment="navbar">
+<div th:fragment="navbar" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="container-fluid border-bottom bg-light wow fadeIn" data-wow-delay="0.1s">
+
         <!-- Topbar -->
         <div class="container topbar bg-primary d-none d-lg-block py-2" style="border-radius: 0 40px">
             <div class="d-flex justify-content-between">
                 <div class="top-info ps-2">
-                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">TP Vinh, Nghệ An</a></small>
-                    <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">thiepthanhx03@gmail.com</a></small>
-                    <small class="me-3"><i class="fas fa-phone me-2 text-secondary"></i><a href="#" class="text-white">0899073387</a></small>
+                    <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i>
+                        <a href="#" class="text-white">TP Vinh, Nghệ An</a>
+                    </small>
+                    <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i>
+                        <a href="#" class="text-white">thiepthanhx03@gmail.com</a>
+                    </small>
+                    <small class="me-3"><i class="fas fa-phone me-2 text-secondary"></i>
+                        <a href="#" class="text-white">0899073387</a>
+                    </small>
                 </div>
+
                 <div class="top-link pe-2">
                     <a href="#" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-facebook-f text-secondary"></i></a>
                     <a href="#" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-twitter text-secondary"></i></a>
@@ -20,28 +28,39 @@
         <!-- Navbar -->
         <div class="container px-0">
             <nav class="navbar navbar-light navbar-expand-xl py-3">
+
                 <!-- Logo -->
                 <a th:href="@{/}" class="navbar-brand">
                     <h1 class="text-primary display-6">Baby<span class="text-secondary">Care</span></h1>
                 </a>
 
-                <!-- Nút toggle trên mobile -->
-                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
                 </button>
 
-                <!-- Menu -->
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <!-- Menu giữa -->
+
+                    <!-- Menu trái -->
                     <div class="navbar-nav mx-auto">
-                        <a th:href="@{/home}" class="nav-item nav-link" th:classappend="${activePage == 'home' ? ' active' : ''}">Home</a>
-                        <a th:href="@{/about}" class="nav-item nav-link" th:classappend="${activePage == 'about' ? ' active' : ''}">About</a>
-                        <a th:href="@{/service}" class="nav-item nav-link" th:classappend="${activePage == 'service' ? ' active' : ''}">Services</a>
-                        <a th:href="@{/program}" class="nav-item nav-link" th:classappend="${activePage == 'program' ? ' active' : ''}">Programs</a>
-                        <a th:href="@{/event}" class="nav-item nav-link" th:classappend="${activePage == 'event' ? ' active' : ''}">Events</a>
+                        <a th:href="@{/home}" class="nav-item nav-link"
+                           th:classappend="${activePage == 'home'} ? ' active' : ''">Home</a>
+
+                        <a th:href="@{/about}" class="nav-item nav-link"
+                           th:classappend="${activePage == 'about'} ? ' active' : ''">About</a>
+
+                        <a th:href="@{/service}" class="nav-item nav-link"
+                           th:classappend="${activePage == 'service'} ? ' active' : ''">Services</a>
+
+                        <a th:href="@{/program}" class="nav-item nav-link"
+                           th:classappend="${activePage == 'program'} ? ' active' : ''">Programs</a>
+
+                        <a th:href="@{/event}" class="nav-item nav-link"
+                           th:classappend="${activePage == 'event'} ? ' active' : ''">Events</a>
 
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" th:classappend="${activePage == 'pages' ? ' active' : ''}">Pages</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                               th:classappend="${activePage == 'pages'} ? ' active' : ''">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 <a th:href="@{/blog}" class="dropdown-item">Our Blog</a>
                                 <a th:href="@{/team}" class="dropdown-item">Our Team</a>
@@ -50,323 +69,221 @@
                             </div>
                         </div>
 
-                        <a th:href="@{/contact}" class="nav-item nav-link" th:classappend="${activePage == 'contact' ? ' active' : ''}">Contact</a>
+                        <a th:href="@{/contact}" class="nav-item nav-link"
+                           th:classappend="${activePage == 'contact'} ? ' active' : ''">Contact</a>
                     </div>
 
+                    <!-- Bên phải -->
                     <div class="d-flex align-items-center gap-4 ms-3">
+
+                        <!-- Giỏ hàng (giữ nguyên) -->
                         <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2"
                                 data-bs-toggle="modal" data-bs-target="#cartModal">
                             <i class="fas fa-shopping-cart"></i>
                             <span>Giỏ hàng</span>
-                            <span class="badge bg-danger rounded-pill">2</span>
+                            <span class="badge bg-danger rounded-pill" id="cartCount">0</span>
                         </button>
 
-                        <!-- Modal Giỏ hàng -->
-                        <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content rounded-0">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="cartLabel">Giỏ hàng khóa học</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <div class="table-responsive">
-                                            <table class="table align-middle" id="cartTable">
-                                                <thead>
-                                                <tr>
-                                                    <th>Khóa học</th>
-                                                    <th>Mã KH</th>
-                                                    <th>Giảng viên</th>
-                                                    <th>Giá</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Tạm tính</th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr data-course-id="KH001" data-price="500000">
-                                                    <td class="align-middle">Khóa học Piano cho bé</td>
-                                                    <td class="align-middle">KH001</td>
-                                                    <td class="align-middle">Nguyễn Văn A</td>
-                                                    <td class="align-middle price-cell">500.000đ</td>
-                                                    <td>
-                                                        <div class="input-group input-group-sm">
-                                                            <label>
-                                                                <input type="number" class="form-control text-center quantity-input" min="1" value="1" style="width:60px;">
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle subtotal-cell">500.000đ</td>
-                                                    <td class="align-middle">
-                                                        <button class="btn btn-sm btn-outline-danger remove-row">Xóa</button>
-                                                    </td>
-                                                </tr>
-
-                                                <tr data-course-id="KH002" data-price="300000">
-                                                    <td class="align-middle">Khóa học Vẽ sáng tạo</td>
-                                                    <td class="align-middle">KH002</td>
-                                                    <td class="align-middle">Trần Thị B</td>
-                                                    <td class="align-middle price-cell">300.000đ</td>
-                                                    <td>
-                                                        <div class="input-group input-group-sm">
-                                                            <label>
-                                                                <input type="number" class="form-control text-center quantity-input" min="1" value="1" style="width:60px;">
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle subtotal-cell">300.000đ</td>
-                                                    <td class="align-middle">
-                                                        <button class="btn btn-sm btn-outline-danger remove-row">Xóa</button>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-
-                                                <tfoot>
-                                                <tr>
-                                                    <td colspan="4"></td>
-                                                    <td class="text-end"><strong>Tổng:</strong></td>
-                                                    <td colspan="2"><strong id="cartTotal">800.000đ</strong></td>
-                                                </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-
-                                        <div class="d-flex justify-content-end gap-2">
-                                            <a href="/cart" class="btn btn-outline-secondary">Xem giỏ hàng</a>
-                                            <button class="btn btn-primary" id="checkoutBtn">Thanh toán</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Nếu chưa đăng nhập -->
+                        <div sec:authorize="isAnonymous()" class="d-flex align-items-center gap-3">
+                            <button type="button" class="btn btn-primary d-flex align-items-center gap-2"
+                                    data-bs-toggle="modal" data-bs-target="#loginModal">
+                                <i class="fas fa-user"></i>
+                                <span>Đăng nhập</span>
+                            </button>
                         </div>
 
-                        <button type="button" class="btn btn-primary d-flex align-items-center gap-2"
-                                data-bs-toggle="modal" data-bs-target="#loginModal">
-                            <i class="fas fa-user"></i>
-                            <span>Đăng snhập</span>
-                        </button>
-
-                        <!-- Modal Đăng nhập -->
-                        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content rounded-0">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="loginLabel">Đăng nhập</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <form action="#" method="post" class="px-2" id="loginForm">
-                                            <div class="mb-3">
-                                                <label for="loginUsername" class="form-label">Tên đăng nhập / Email</label>
-                                                <input type="text" id="loginUsername" name="username" class="form-control" placeholder="Nhập email hoặc tên đăng nhập">
-                                            </div>
-
-                                            <div class="mb-3 position-relative">
-                                                <label for="loginPassword" class="form-label">Mật khẩu</label>
-                                                <div class="input-group">
-                                                    <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Nhập mật khẩu" aria-describedby="toggleLoginPwd">
-                                                    <button class="btn btn-outline-secondary" type="button" id="toggleLoginPwd" aria-label="Hiện mật khẩu">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="remember">
-                                                    <label for="remember" class="form-check-label">Ghi nhớ</label>
-                                                </div>
-                                                <a href="#" class="small">Quên mật khẩu?</a>
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
-
-                                            <div class="text-center mt-3">
-                                                <small>Chưa có tài khoản?
-                                                    <!-- link chuyển sang modal đăng ký: đóng login và mở register -->
-                                                    <a href="#" data-bs-target="#registerModal" data-bs-toggle="modal" data-bs-dismiss="modal">Đăng ký</a>
-                                                </small>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Nếu là USER -->
+                        <div sec:authorize="hasRole('USER')" class="d-flex align-items-center gap-3">
+                            <a th:href="@{/profile}" class="btn btn-outline-primary d-flex align-items-center gap-2">
+                                <i class="fas fa-user"></i>
+                                <span sec:authentication="name">Profile</span>
+                            </a>
+                            <form th:action="@{/auth/logout}" method="post">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-outline-secondary">Đăng xuất</button>
+                            </form>
                         </div>
 
-                        <!-- Modal Đăng ký -->
-                        <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content rounded-0">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="registerLabel">Đăng ký</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <form action="#" method="post" id="registerForm" class="px-2">
-                                            <div class="mb-3">
-                                                <label for="regFullname" class="form-label">Họ và tên</label>
-                                                <input type="text" id="regFullname" name="fullname" class="form-control" placeholder="Họ và tên">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="regUsername" class="form-label">Tên đăng nhập</label>
-                                                <input type="text" id="regUsername" name="username" class="form-control" placeholder="Tên đăng nhập">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="regEmail" class="form-label">Email</label>
-                                                <input type="email" id="regEmail" name="email" class="form-control" placeholder="Email">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="regPhone" class="form-label">Số điện thoại</label>
-                                                <input type="text" id="regPhone" name="phone" class="form-control" placeholder="Số điện thoại">
-                                            </div>
-
-                                            <div class="mb-3 position-relative">
-                                                <label for="regPassword" class="form-label">Mật khẩu</label>
-                                                <div class="input-group">
-                                                    <input type="password" id="regPassword" name="password" class="form-control" placeholder="Mật khẩu" aria-describedby="toggleRegPwd">
-                                                    <button class="btn btn-outline-secondary" type="button" id="toggleRegPwd" aria-label="Hiện mật khẩu">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3 position-relative">
-                                                <label for="regConfirm" class="form-label">Xác nhận mật khẩu</label>
-                                                <div class="input-group">
-                                                    <input type="password" id="regConfirm" name="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" aria-describedby="toggleRegConfirm">
-                                                    <button class="btn btn-outline-secondary" type="button" id="toggleRegConfirm" aria-label="Hiện mật khẩu">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-3 text-danger small" id="registerError" style="display:none;"></div>
-
-                                            <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
-
-                                            <div class="text-center mt-3">
-                                                <small>Đã có tài khoản? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" data-bs-dismiss="modal">Đăng nhập</a></small>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Nếu là ADMIN -->
+                        <div sec:authorize="hasRole('ADMIN')" class="d-flex align-items-center gap-3">
+                            <a th:href="@{/admin/dashboard}" class="btn btn-outline-danger d-flex align-items-center gap-2">
+                                <i class="fas fa-user-shield"></i>
+                                <span>Admin</span>
+                            </a>
+                            <form th:action="@{/auth/logout}" method="post">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-outline-secondary">Đăng xuất</button>
+                            </form>
                         </div>
-
                     </div>
+
                 </div>
             </nav>
         </div>
     </div>
 
-    <script>
-        function formatVND(n) {
-            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
-        }
+    <!-- Modal Login (đã thêm id cho input pass + nút toggle) -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đăng nhập</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-        function toInt(v) {
-            return Math.round(Number(v) || 0);
-        }
+                <div class="modal-body">
+                    <div th:if="${loginError}" class="alert alert-danger text-center">
+                        <span th:text="${loginError}"></span>
+                    </div>
 
-        function recalcRow(row) {
-            const price = toInt(row.dataset.price);
-            const qtyInput = row.querySelector('.quantity-input');
-            let qty = parseInt(qtyInput.value, 10) || 0;
-            if (qty < 1) qty = 1, qtyInput.value = 1;
-            const subtotal = price * qty;
-            row.querySelector('.subtotal-cell').textContent = formatVND(subtotal);
-            return subtotal;
-        }
+                    <form th:action="@{/auth/login}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-        function recalcCart() {
-            const rows = Array.from(document.querySelectorAll('#cartTable tbody tr'));
-            const total = rows.reduce((sum, r) => sum + recalcRow(r), 0);
-            document.getElementById('cartTotal').textContent = formatVND(total);
-            return total;
-        }
+                        <div class="mb-3">
+                            <label class="form-label">Tên đăng nhập / Email</label>
+                            <input type="text" name="username" class="form-control" required id="loginUsername">
+                        </div>
 
-        document.addEventListener('DOMContentLoaded', function(){
-            recalcCart();
+                        <div class="mb-3 position-relative">
+                            <label class="form-label">Mật khẩu</label>
+                            <div class="input-group">
+                                <input type="password" name="password" class="form-control" required id="loginPassword">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleLoginPwd" tabindex="-1">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
 
-            document.querySelector('#cartTable').addEventListener('click', function(e){
-                if (e.target.matches('.quantity-increase')) {
-                    const row = e.target.closest('tr');
-                    const input = row.querySelector('.quantity-input');
-                    input.value = parseInt(input.value || 0, 10) + 1;
-                    recalcCart();
-                } else if (e.target.matches('.quantity-decrease')) {
-                    const row = e.target.closest('tr');
-                    const input = row.querySelector('.quantity-input');
-                    input.value = Math.max(1, parseInt(input.value || 0, 10) - 1);
-                    recalcCart();
-                } else if (e.target.matches('.remove-row')) {
-                    const row = e.target.closest('tr');
-                    row.remove();
-                    recalcCart();
-                }
-            });
+                        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
 
-            document.querySelector('#cartTable').addEventListener('change', function(e){
-                if (e.target.matches('.quantity-input')) {
-                    const row = e.target.closest('tr');
-                    if (parseInt(e.target.value,10) < 1) e.target.value = 1;
-                    recalcCart();
-                }
-            });
+                        <div class="text-center mt-3">
+                            <small>Chưa có tài khoản?
+                                <a href="#" data-bs-target="#registerModal" data-bs-toggle="modal" data-bs-dismiss="modal">Đăng ký</a>
+                            </small>
+                        </div>
+                    </form>
 
-            document.getElementById('checkoutBtn').addEventListener('click', function(){
-                const total = recalcCart();
-                if (total === 0) {
-                    alert('Giỏ hàng trống.');
-                    return;
-                }
-                window.location.href = '/checkout';
-            });
-        });
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function togglePasswordBtn(inputId, btnId) {
-            const input = document.getElementById(inputId);
-            const btn = document.getElementById(btnId);
-            if(!input || !btn) return;
-            btn.addEventListener('click', function(){
-                if(input.type === 'password'){
-                    input.type = 'text';
-                    btn.querySelector('i').classList.remove('fa-eye');
-                    btn.querySelector('i').classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    btn.querySelector('i').classList.remove('fa-eye-slash');
-                    btn.querySelector('i').classList.add('fa-eye');
-                }
-            });
-        }
+    <!-- Modal Register (thêm id input + nút toggle, id form để validate JS nếu cần) -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đăng ký</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-        document.addEventListener('DOMContentLoaded', function(){
-            togglePasswordBtn('loginPassword','toggleLoginPwd');
-            togglePasswordBtn('regPassword','toggleRegPwd');
-            togglePasswordBtn('regConfirm','toggleRegConfirm');
+                <div class="modal-body">
+                    <div th:if="${registerSuccess}" class="alert alert-success text-center">
+                        <span th:text="${registerSuccess}"></span>
+                    </div>
 
-            const registerForm = document.getElementById('registerForm');
-            if(registerForm){
-                registerForm.addEventListener('submit', function(e){
-                    const pwd = document.getElementById('regPassword').value;
-                    const confirm = document.getElementById('regConfirm').value;
-                    const err = document.getElementById('registerError');
-                    if(pwd !== confirm){
-                        e.preventDefault();
-                        err.style.display = 'block';
-                        err.textContent = 'Mật khẩu và xác nhận mật khẩu không khớp.';
-                        return false;
-                    }
-                    err.style.display = 'none';
-                });
+                    <form th:action="@{/auth/register}" method="post" id="registerForm">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                        <div class="mb-3">
+                            <label>Họ và tên</label>
+                            <input type="text" name="fullname" class="form-control" required id="regFullname">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Tên đăng nhập</label>
+                            <input type="text" name="username" class="form-control" required id="regUsername">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" required id="regEmail">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Số điện thoại</label>
+                            <input type="text" name="phone" class="form-control" id="regPhone">
+                        </div>
+
+                        <div class="mb-3 position-relative">
+                            <label>Mật khẩu</label>
+                            <div class="input-group">
+                                <input type="password" name="password" class="form-control" required id="regPassword">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleRegPwd" tabindex="-1">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 position-relative">
+                            <label>Xác nhận mật khẩu</label>
+                            <div class="input-group">
+                                <input type="password" name="confirmPassword" class="form-control" required id="regConfirm">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleRegConfirm" tabindex="-1">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="registerError" class="text-danger mb-3" style="display:none"></div>
+
+                        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+
+                        <div class="text-center mt-3">
+                            <small>Đã có tài khoản?
+                                <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" data-bs-dismiss="modal">Đăng nhập</a>
+                            </small>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function togglePasswordBtn(inputId, btnId) {
+        const input = document.getElementById(inputId);
+        const btn = document.getElementById(btnId);
+        if(!input || !btn) return;
+        btn.addEventListener('click', function(){
+            if(input.type === 'password'){
+                input.type = 'text';
+                const icon = btn.querySelector('i');
+                if(icon) { icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); }
+            } else {
+                input.type = 'password';
+                const icon = btn.querySelector('i');
+                if(icon) { icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); }
             }
         });
-    </script>
-</div>
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+        // gọi lại toggle cho các id mới
+        togglePasswordBtn('loginPassword','toggleLoginPwd');
+        togglePasswordBtn('regPassword','toggleRegPwd');
+        togglePasswordBtn('regConfirm','toggleRegConfirm');
+
+        // register form validation (bảo đảm id trùng với form)
+        const registerForm = document.getElementById('registerForm');
+        if(registerForm){
+            registerForm.addEventListener('submit', function(e){
+                const pwd = document.getElementById('regPassword').value;
+                const confirm = document.getElementById('regConfirm').value;
+                const err = document.getElementById('registerError');
+                if(pwd !== confirm){
+                    e.preventDefault();
+                    err.style.display = 'block';
+                    err.textContent = 'Mật khẩu và xác nhận mật khẩu không khớp.';
+                    return false;
+                }
+                err.style.display = 'none';
+            });
+        }
+    });
+</script>
+
