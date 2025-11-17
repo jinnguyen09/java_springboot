@@ -24,12 +24,6 @@ public class PromotionController {
         this.service = service;
     }
 
-//    @GetMapping("home")
-//    public String list(Model model) {
-//        model.addAttribute("promotions", service.findAll());
-//        return "promotions/home";
-//    }
-
     @GetMapping("/add")
     public String addForm(Model model) {
 

@@ -33,16 +33,14 @@
         <input type="number" name="discount" class="form-control form-control-sm"
                placeholder="Mức giảm" th:value="${searchDiscount}">
 
-        <span>Bắt đầu</span>
         <input type="date" name="startDate" class="form-control form-control-sm"
                th:value="${searchStartDate}">
 
         <input type="date" name="endDate" class="form-control form-control-sm"
                th:value="${searchEndDate}">
 
-        <span>Kết thúc</span>
         <button class="btn btn-primary btn-sm">Tìm</button>
-        <a th:href="@{/promotions}" class="btn btn-outline-secondary btn-sm">Trở lại</a>
+        <a th:href="@{/promotions}" class="btn btn-outline-secondary btn-sm">Xoá</a>
       </form>
 
     </div>
@@ -131,7 +129,6 @@
         e.preventDefault();
         const id = this.getAttribute('data-id');
         promoNameEl.textContent = this.getAttribute('data-title') || '';
-        // set action tới endpoint delete (POST /promotions/delete/{id})
         deleteForm.action = '/promotions/delete/' + id;
         bsModal.show();
       });
