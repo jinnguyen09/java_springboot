@@ -14,7 +14,6 @@ public class InMemoryPromotionRepository {
     private final AtomicLong idGen = new AtomicLong(0);
 
     public InMemoryPromotionRepository() {
-        // ====== 5 SAMPLE PROMOTIONS ======
         save(make("Giảm giá Tết 50%",
                 LocalDate.of(2025, 1, 10),
                 LocalDate.of(2025, 1, 20),
